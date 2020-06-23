@@ -1323,18 +1323,18 @@ definitions:
         type: string
         readOnly: true
       created:
-        type: integer
+        type: string
         readOnly: true
       updated:
-        type: integer
+        type: string
         readOnly: true
       name:
-        type: string        
+        type: string
       payload:
         type: string
         description: base64 encoded function body
       payload_size:
-        type: integer
+        type: string
         readOnly: true
       compression: 
         type: string
