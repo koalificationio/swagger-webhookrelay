@@ -646,12 +646,12 @@ paths:
                 response:
                   value:
                     application/json:
-                      - created: 1496610194
-                        updated: 1532192772
+                      - created: "1496610194"
+                        updated: "1532192772"
                         id: 339ed2e3-70cf-4a81-8db8-e95a9251155d
                         name: lightspeedhq_to_webshipper
                         driver: lua
-                        payload_size: 500814
+                        payload_size: "500814"
                         account_id: bd7e1dfc-54c8-408c-a885-7498bf1d8522
     post:
       tags:
@@ -712,13 +712,13 @@ paths:
               examples:
                 response:
                   value:
-                    - created: 1496610194
-                      updated: 1532192772
+                    - created: "1496610194"
+                      updated: "1532192772"
                       id: 339ed2e3-70cf-4a81-8db8-e95a9251155d
                       name: lightspeedhq_to_webshipper
                       driver: lua
                       payload: <base64 encoded function body>
-                      payload_size: 500814
+                      payload_size: "500814"
                       account_id: bd7e1dfc-54c8-408c-a885-7498bf1d8522
         "404":
           description: Function not found
@@ -732,6 +732,82 @@ paths:
         "404":
           description: Function not found
     summary: Get and delete functions
+  "/v1/functions/{functionID}/config":
+    parameters:
+      - name: functionID
+        in: path
+        description: ID of a function to manage
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Functions
+      summary: List All config values
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FunctionConfig"
+            examples:
+              examples:
+                response:
+                  value:
+                    application/json:
+                      - created: "1496610194"
+                        updated: "1532192772"
+                        function_id: 339ed2e3-70cf-4a81-8db8-e95a9251155d
+                        key: name
+                        value: secret
+                        account_id: bd7e1dfc-54c8-408c-a885-7498bf1d8522
+    put:
+      tags:
+        - Functions
+      description: Update or create function config variable.
+      summary: Update Function
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FunctionConfig"
+        required: true
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FunctionConfig"
+        "400":
+          description: Invalid function request supplied
+    summary: Manage function config variables
+  "/v1/functions/{functionID}/config/{configKey}":
+    parameters:
+      - name: functionID
+        in: path
+        description: ID of a function to manage
+        required: true
+        schema:
+          type: string
+      - name: configKey
+        in: path
+        description: Config key to manage
+        required: true
+        schema:
+          type: string
+    delete:
+      tags:
+        - Functions
+      summary: Delete Function config value
+      responses:
+        "200":
+          description: Successful Response
+        "404":
+          description: Function config value not found
   /v1/logs:
     get:
       tags:
@@ -1407,6 +1483,16 @@ components:
           type: object
           additionalProperties:
             type: string
+    FunctionConfig:
+      title: Function config variable
+      type: object
+      properties:
+        key:
+          type: string
+          description: Key that will be used to access it from the function
+        value:
+          type: string
+          description: Your configuration value
     Domain:
       title: Reserved Domain
       type: object
